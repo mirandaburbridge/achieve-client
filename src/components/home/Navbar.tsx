@@ -5,11 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Link from '@material-ui/core/Link';
 // import Typography from '@material-ui/core/Typography';
 
-export default class Navbar extends Component {
-    constructor(props: any) {
-        super(props);
-    }
-    const[anchorEl, setAnchorEl] = React.useState<null | HTMLElement > (null);
+const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
 const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -19,29 +15,44 @@ const handleClose = () => {
     setAnchorEl(null);
 };
 
-render() {
-    return (
-        <div>
-            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                Open Menu
-      </Button>
-            <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <MenuItem>
-                    <Link to="/goals" className="site-link">Goals</Link>
-                </MenuItem>
-                <MenuItem>
-                    <Link to="/notes" className="site-link">Notes</Link>
-                </MenuItem>
-                <MenuItem>Logout</MenuItem>
+export interface NavbarProps {
 
-            </Menu>
-        </div>
-    );
 }
+
+export interface NavbarState {
+
 }
+
+class Navbar extends Component<NavbarProps, NavbarState> {
+    constructor(props: NavbarProps) {
+        super(props);
+        this.state = { : };
+    }
+    render() {
+        return (
+            <div>
+                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                    Open Menu
+      </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                    <MenuItem>
+                        <Link to="/goals" className="site-link">Goals</Link>
+                    </MenuItem>
+                    <MenuItem>
+                        <Link to="/notes" className="site-link">Notes</Link>
+                    </MenuItem>
+                    <MenuItem>Logout</MenuItem>
+
+                </Menu>
+            </div>
+        );
+    }
+}
+
+export default Navbar;

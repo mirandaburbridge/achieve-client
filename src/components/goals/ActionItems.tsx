@@ -2,12 +2,39 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
-import Goals from "./Goals";
+import Checkbox from '@material-ui/core/Checkbox';
 
-export default class ActionItems extends Component {
-    constructor(props: any) {
+export interface ActionItemsProps {
+
+}
+
+export interface ActionItemsState {
+    url: string,
+    items: string[],
+    checked: boolean
+}
+
+class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
+    constructor(props: ActionItemsProps) {
         super(props);
+        this.state = { url: `http://localhost:3000/goals`, items: [], checked: false };
     }
+
+    componentDidMount() {
+        this.fetchItems()
+    }
+
+    async fetchItems() {
+        const response = await fetch(this.state.url)
+        const jsonified = await response.json()
+        this.setState({
+            items: jsonified.message
+        })
+    }
+
+    // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setChecked(event.target.checked);
+    // };
 
     render() {
         return (
@@ -16,11 +43,23 @@ export default class ActionItems extends Component {
                     <h4>Action Items</h4>
                     <Box border={1}>
                         <ul>
-                            //*list each action item
+                            <li>
+                                <Checkbox
+                                    color="default"
+                                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
+                                />
+                            Item 1</li>
+                            {this.state.items.map(item = <li>
+                                <Checkbox
+                                    color="default"
+                                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
+                                />{item}</li>)}
                         </ul>
                     </Box>
                 </Container>
             </div>
-        )
+        );
     }
-};
+}
+
+export default ActionItems;

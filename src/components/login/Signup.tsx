@@ -5,32 +5,38 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, CircularProgress } from "@material-ui/core";
 
-// import { BASEURL } from "../../context/base-url-context";
+// const useStyles = makeStyles((theme) => ({
+//     root: {
+//         "& .MuiTextField-root": {
+//             margin: theme.spacing(1),
+//             width: "25ch",
+//         },
+//     },
+// }));
 
-// let username: string;
-// let password: string;
+export interface SignupProps {
+    updateToken: string
+}
 
+export interface SignupState {
+    username: string,
+    password: string,
+    loading: boolean,
+    error: string
+}
 
-
-
-class Signup extends Component {
-    constructor(props: any) {
+class Signup extends Component<SignupProps, SignupState> {
+    constructor(props: SignupProps) {
         super(props);
+        this.state = { username: '', password: '', loading: false, error: '' };
     }
 
-    const[username: string, setUsername: string] = useState("");
-    const[password: string, setPassword: string] = useState("");
-    // const[loading, setLoading] = useState(false);
-    // const[error, setError] = useState("");
-    // const classes = useStyles();
-
-    handleSubmit(event) {
-        // event.preventDefault();
-        // setLoading(true);
+    handleSubmit = () => {
+        this.setState({ loading: true });
         fetch(`http://localhost:3000/user/create`, {
             method: "POST",
             body: JSON.stringify({
-                user: { username: username, password: password }
+                user: { username: this.state.username, password: this.state.password }
             }),
             headers: new Headers({
                 "Content-Type": "application/json",
@@ -38,17 +44,18 @@ class Signup extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
-                setLoading(false);
-                if (data.error) return setError(data.error);
-                this.props.updateToken(data.sessionToken);
-            });
+                this.setState({ loading: false });
+                if (data.error) return this.setState(data.error);
+                this.props.updateToken(data.token);
+            })
+            .catch((err) => this.setState({ loading: false }));
     }
 
     render() {
         return (
             <div>
                 <Container>
-                    <Typography variant="h4">Sign-Up</Typography>
+                    <Typography variant="h4">Sign Up</Typography>
                     <form noValidate onSubmit={this.handleSubmit}>
                         <TextField
                             required
@@ -56,9 +63,10 @@ class Signup extends Component {
                             label="Required"
                             defaultValue="username"
                             variant="outlined"
-                            onChange={(e) => setUsername(e.target.value)}
-                            value={username}
+                            onChange={(e) => this.state.setUsername(e.target.value)}
+                            value={this.state.username}
                         />
+
                         <TextField
                             id="outlined-password-input"
                             label="Password"
@@ -66,21 +74,17 @@ class Signup extends Component {
                             autoComplete="current-password"
                             variant="outlined"
                             onChange={(e) => setPassword(e.target.value)}
-                            value={password}
+                            value={this.state.password}
                         />
                         <Button variant="contained" color="primary" type="submit">
-                            {loading ? (
-                                <CircularProgress size={25} color="inherit" />
-                            ) : (
-                                "SignUp"
-                            )}
+                            {this.state.loading ? <CircularProgress size={25} color="inherit" /> : "Login"}
                         </Button>
                     </form>
-                    {error ? <Typography color="secondary">{error}</Typography> : null}
+                    {this.state.error ? <Typography color="secondary">{this.state.error}</Typography> : null}
                 </Container>
             </div>
-        )
+        );
     }
-};
+}
 
 export default Signup;

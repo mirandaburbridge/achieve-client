@@ -8,11 +8,19 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-export default class Notes extends Component {
-    constructor(props: any) {
-        super(props);
-    }
+export interface NotesProps {
 
+}
+
+export interface NotesState {
+
+}
+
+class Notes extends Component<NotesProps, NotesState> {
+    constructor(props: NotesProps) {
+        super(props);
+        this.state = { : };
+    }
     render() {
         return (
             <div>
@@ -27,9 +35,19 @@ export default class Notes extends Component {
                                 <Button size='small'>Delete</Button>
                             </CardActions>
                         </Card>
+                        <Card variant='outlined'>
+                            <CardContent>
+                                <Typography variant='body2' component='p'>Filler note</Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size='small'>Delete</Button>
+                            </CardActions>
+                        </Card>
                     </Box>
                 </Container>
             </div>
-        )
+        );
     }
-};
+}
+
+export default Notes;

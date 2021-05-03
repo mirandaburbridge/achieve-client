@@ -6,32 +6,37 @@ import Button from "@material-ui/core/Button";
 import Signup from './Signup'
 import Login from './Login'
 
-class Auth extends Component {
-    constructor(props: any) {
+export interface AuthProps {
+    token: string
+}
+
+export interface AuthState {
+    hasAccount: boolean
+}
+
+class Auth extends React.Component<AuthProps, AuthState> {
+    constructor(props: AuthProps) {
         super(props)
+        this.state = { hasAccount: false };
     }
 
-    const[authComp: any, setAuthComp: any] = useState(false);
-    const onClick = () => setAuthComp(!authComp);
+    toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+        this.state.hasAccount ? this.setState({ hasAccount: false }) :
+            this.setState({ hasAccount: true })
+    }
 
     render() {
         return (
             <div className="auth-container">
                 <Grid>
-                    {authComp ? (
-                        <Signup updateToken={props.updateToken} />
+                    {this.state.hasAccount ? (
+                        <Login updateToken={this.props.token} />
                     ) : (
-                        <Login updateToken={props.updateToken} />
+                        <Signup updateToken={this.props.token} />
                     )}
-                    {authComp ? (
-                        <Button color="primary" onClick={this.onClick}>
-                            Already have an account? Login.
-                        </Button>
-                    ) : (
-                        <Button color="primary" onClick={this.onClick}>
-                            Don't have an account yet? Sign up.
-                        </Button>
-                    )}
+                    <Button color="primary" onClick={(event) => this.toggle(event)}>
+                        {this.state.hasAccount ? 'Already have an account? Login.' : "Don't have an account yet? Sign up."}
+                    </Button>
                 </Grid>
             </div>
         )

@@ -2,11 +2,31 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 
-import NewGoal from "./NewGoal";
+export interface GoalsProps {
 
-export default class Goals extends Component {
-    constructor(props: any) {
+}
+
+export interface GoalsState {
+    url: string,
+    goals: string[]
+}
+
+class Goals extends React.Component<GoalsProps, GoalsState> {
+    constructor(props: GoalsProps) {
         super(props);
+        this.state = { url: `http://localhost:3000/goals`, goals: [] };
+    }
+
+    componentDidMount() {
+        this.fetchGoals()
+    }
+
+    async fetchGoals() {
+        const response = await fetch(this.state.url)
+        const jsonified = await response.json()
+        this.setState({
+            goals: jsonified.message
+        })
     }
 
     render() {
@@ -14,12 +34,13 @@ export default class Goals extends Component {
             <div>
                 <Container>
                     <ul>
-                        //*list each goal
+                        {this.state.goals.map(goal = <li>{goal}</li>)}
                     </ul>
-                    //*link to NewGoal component
-                    <Link to="/new" className="site-link">Create a new goal</Link>
+                    <Link to="/create" className="site-link">Create a new goal</Link>
                 </Container>
             </div>
-        )
+        );
     }
-};
+}
+
+export default Goals;
