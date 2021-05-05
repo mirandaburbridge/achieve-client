@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component } from 'react'
 
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -14,13 +14,16 @@ export interface AuthState {
     hasAccount: boolean
 }
 
-class Auth extends React.Component<AuthProps, AuthState> {
+class Auth extends Component<AuthProps, AuthState> {
     constructor(props: AuthProps) {
         super(props)
         this.state = { hasAccount: false };
     }
 
     toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (event) {
+            event.preventDefault()
+        }
         this.state.hasAccount ? this.setState({ hasAccount: false }) :
             this.setState({ hasAccount: true })
     }

@@ -13,28 +13,45 @@ export interface NotesProps {
 }
 
 export interface NotesState {
-
+    url: string,
+    notes: string[]
 }
 
 class Notes extends Component<NotesProps, NotesState> {
     constructor(props: NotesProps) {
         super(props);
-        this.state = { : };
+        this.state = { url: `http://localhost:3000/notes`, notes: [] };
     }
+
+    componentDidMount() {
+        this.fetchNotes()
+    }
+
+    async fetchNotes() {
+        const response = await fetch(this.state.url)
+        const jsonified = await response.json()
+        this.setState({
+            notes: jsonified.message
+        })
+    }
+
     render() {
         return (
             <div>
                 <Container>
                     <h4>Note</h4>
                     <Box border={1}>
-                        <Card variant='outlined'>
+                        {this.state.notes.map((note) => {
+                            <Card variant='outlined'>
                             <CardContent>
-                                <Typography variant='body2' component='p'>Filler note</Typography>
+                                <Typography variant='body2' component='p'>{note}</Typography>
                             </CardContent>
                             <CardActions>
                                 <Button size='small'>Delete</Button>
                             </CardActions>
                         </Card>
+                        })}
+
                         <Card variant='outlined'>
                             <CardContent>
                                 <Typography variant='body2' component='p'>Filler note</Typography>

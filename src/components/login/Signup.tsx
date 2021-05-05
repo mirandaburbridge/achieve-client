@@ -15,7 +15,7 @@ import { Typography, CircularProgress } from "@material-ui/core";
 // }));
 
 export interface SignupProps {
-    updateToken: string
+    updateToken: any
 }
 
 export interface SignupState {
@@ -63,7 +63,7 @@ class Signup extends Component<SignupProps, SignupState> {
                             label="Required"
                             defaultValue="username"
                             variant="outlined"
-                            onChange={(e) => this.state.setUsername(e.target.value)}
+                            onChange={(e) => this.setState({ username: e.target.value })}
                             value={this.state.username}
                         />
 
@@ -73,7 +73,7 @@ class Signup extends Component<SignupProps, SignupState> {
                             type="password"
                             autoComplete="current-password"
                             variant="outlined"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => this.setState({ password: e.target.value })}
                             value={this.state.password}
                         />
                         <Button variant="contained" color="primary" type="submit">

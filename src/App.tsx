@@ -13,7 +13,7 @@ export interface AppProps {
 }
 
 export interface AppState {
-  token: string
+  token: any
 }
 
 class App extends Component<AppProps, AppState> {
@@ -64,7 +64,8 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <div>
-
+        {this.displayLogin()}
+        <Home />
       </div>
     );
   }

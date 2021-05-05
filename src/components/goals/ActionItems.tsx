@@ -17,7 +17,7 @@ export interface ActionItemsState {
 class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
     constructor(props: ActionItemsProps) {
         super(props);
-        this.state = { url: `http://localhost:3000/goals`, items: [], checked: false };
+        this.state = { url: `http://localhost:3000/item`, items: [], checked: false };
     }
 
     componentDidMount() {
@@ -30,6 +30,7 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
         this.setState({
             items: jsonified.message
         })
+        if (jsonified.error) return this.setState(jsonified.error);
     }
 
     // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,11 +50,13 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
                                     inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
                                 />
                             Item 1</li>
-                            {this.state.items.map(item = <li>
+                            {this.state.items.map((item) => {
+                                <li>
                                 <Checkbox
                                     color="default"
                                     inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-                                />{item}</li>)}
+                                />{item}</li>
+                            })}
                         </ul>
                     </Box>
                 </Container>

@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import Container from "@material-ui/core/Container";
 import TextField from '@material-ui/core/TextField';
 
-export default class NewGoal extends Component {
-    constructor(props: any) {
-        super(props);
-    }
+export interface NewGoalProps {
 
+}
+
+export interface NewGoalState {
+    url: string,
+    goals: string
+}
+
+class NewGoal extends Component<NewGoalProps, NewGoalState> {
+    constructor(props: NewGoalProps) {
+        super(props);
+        this.state = { url: `http://localhost:3000/goals`, goals: '' };
+    }
     render() {
         return (
             <div>
@@ -14,6 +23,8 @@ export default class NewGoal extends Component {
                     <TextField id="outlined-basic" label="Goal Name" variant="outlined" />
                 </Container>
             </div>
-        )
+        );
     }
-};
+}
+
+export default NewGoal;

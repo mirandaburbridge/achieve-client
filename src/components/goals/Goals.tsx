@@ -34,7 +34,8 @@ class Goals extends React.Component<GoalsProps, GoalsState> {
             <div>
                 <Container>
                     <ul>
-                        {this.state.goals.map(goal = <li>{goal}</li>)}
+                        {this.state.goals.map((goal) =>
+                            (<li>{goal}</li>))}
                     </ul>
                     <Link to="/create" className="site-link">Create a new goal</Link>
                 </Container>

@@ -7,13 +7,14 @@ export interface NewNoteProps {
 }
 
 export interface NewNoteState {
-
+    url: string,
+    notes: string
 }
 
 class NewNote extends Component<NewNoteProps, NewNoteState> {
     constructor(props: NewNoteProps) {
         super(props);
-        this.state = { : };
+        this.state = { url: `http://localhost:3000/notes`, notes: '' };
     }
     render() {
         return (
