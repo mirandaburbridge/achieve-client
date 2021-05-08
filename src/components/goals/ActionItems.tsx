@@ -5,7 +5,7 @@ import Box from "@material-ui/core/Box";
 import Checkbox from '@material-ui/core/Checkbox';
 
 export interface ActionItemsProps {
-
+    token: any
 }
 
 export interface ActionItemsState {
@@ -17,7 +17,7 @@ export interface ActionItemsState {
 class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
     constructor(props: ActionItemsProps) {
         super(props);
-        this.state = { url: `http://localhost:3000/item`, items: [], checked: false };
+        this.state = { url: `http://localhost:3000/items`, items: [], checked: false };
     }
 
     componentDidMount() {
@@ -33,8 +33,8 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
         if (jsonified.error) return this.setState(jsonified.error);
     }
 
-    // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //     setChecked(event.target.checked);
+    // handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     this.setState(checked: true);
     // };
 
     render() {
@@ -50,13 +50,13 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
                                     inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
                                 />
                             Item 1</li>
-                            {this.state.items.map((item) => {
+                            {/* {this.state.items.map((item) => {
                                 <li>
-                                <Checkbox
-                                    color="default"
-                                    inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-                                />{item}</li>
-                            })}
+                                    <Checkbox
+                                        color="default"
+                                        inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
+                                    />{item}</li>
+                            })} */}
                         </ul>
                     </Box>
                 </Container>

@@ -11,7 +11,7 @@ export interface GoalsState {
     goals: string[]
 }
 
-class Goals extends React.Component<GoalsProps, GoalsState> {
+class Goals extends Component<GoalsProps, GoalsState> {
     constructor(props: GoalsProps) {
         super(props);
         this.state = { url: `http://localhost:3000/goals`, goals: [] };

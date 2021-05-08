@@ -14,7 +14,7 @@ export interface NewGoalState {
 class NewGoal extends Component<NewGoalProps, NewGoalState> {
     constructor(props: NewGoalProps) {
         super(props);
-        this.state = { url: `http://localhost:3000/goals`, goals: '' };
+        this.state = { url: `http://localhost:3000/goals/create`, goals: '' };
     }
     render() {
         return (

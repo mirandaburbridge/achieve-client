@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css'
 
-// import Navbar from "./components/home/Navbar";
+import Navbar from "./components/home/Navbar";
 import Auth from './components/login/Auth';
 import Goals from './components/goals/Goals';
 import Notes from './components/notes/Notes';
@@ -22,14 +22,14 @@ class App extends Component<AppProps, AppState> {
     this.state = { token: '' };
   }
 
-  setSessionToken = (newToken: string) => {
-    localStorage.setItem('token', newToken),
+  updateToken = (newToken: any) => {
+    localStorage.setItem('sessionToken', newToken),
       this.setState({ token: newToken })
   }
 
   componentDidMount() {
-    if (localStorage.getItem('token')) {
-      this.setState({ token: localStorage.getItem('token') })
+    if (localStorage.getItem('sessionToken')) {
+      this.setState({ token: localStorage.getItem('sessionToken') })
     }
   }
 
@@ -40,23 +40,23 @@ class App extends Component<AppProps, AppState> {
 
   displayLogin = () => {
     return (
-      localStorage.getItem('token') ? (
+      localStorage.getItem('sessionToken') ? (
         <Router>
           <Switch>
             <div>
               <Router>
-                {/* <Navbar /> */}
+                <Navbar />
                 <Switch>
                   <Route exact path="/goals" component={Goals} />
                   <Route exact path="/notes" component={Notes} />
                 </Switch>
-                <Home />
+                <Home token={this.state.token} />
               </Router>
             </div>
           </Switch>
         </Router>
       ) : (
-        <Auth token={this.state.token} />
+        <Auth updateToken={this.updateToken} />
       )
     )
   }
@@ -65,7 +65,6 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         {this.displayLogin()}
-        <Home />
       </div>
     );
   }

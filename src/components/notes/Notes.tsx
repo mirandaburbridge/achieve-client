@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 export interface NotesProps {
-
+    token: any
 }
 
 export interface NotesState {
@@ -41,16 +41,16 @@ class Notes extends Component<NotesProps, NotesState> {
                 <Container>
                     <h4>Note</h4>
                     <Box border={1}>
-                        {this.state.notes.map((note) => {
+                        {/* {this.state.notes.map((note) => {
                             <Card variant='outlined'>
-                            <CardContent>
-                                <Typography variant='body2' component='p'>{note}</Typography>
-                            </CardContent>
-                            <CardActions>
-                                <Button size='small'>Delete</Button>
-                            </CardActions>
-                        </Card>
-                        })}
+                                <CardContent>
+                                    <Typography variant='body2' component='p'>{note}</Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <Button size='small'>Delete</Button>
+                                </CardActions>
+                            </Card>
+                        })} */}
 
                         <Card variant='outlined'>
                             <CardContent>

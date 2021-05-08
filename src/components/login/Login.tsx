@@ -32,8 +32,9 @@ class Login extends Component<LoginProps, LoginState> {
         this.state = { username: '', password: '', loading: false, error: '' };
     }
 
-    handleSubmit = () => {
+    handleSubmit = (e) => {
         this.setState({ loading: true });
+        e.preventDefault();
         fetch(`http://localhost:3000/user/login`, {
             method: "POST",
             body: JSON.stringify({
@@ -47,7 +48,7 @@ class Login extends Component<LoginProps, LoginState> {
             .then((data) => {
                 this.setState({ loading: false });
                 if (data.error) return this.setState(data.error);
-                this.props.updateToken(data.token, data.user.id);
+                this.props.updateToken(data.sessionToken, data.user.id);
             })
             .catch((err) => this.setState({ loading: false }));
     };

@@ -23,7 +23,7 @@ import Notes from '../notes/Notes';
 // const classes = useStyles();
 
 export interface HomeProps {
-
+    token: any
 }
 
 export interface HomeState {
@@ -40,12 +40,12 @@ class Home extends Component<HomeProps, HomeState> {
             <div>
                 {/* <Grid container spacing={2}>
                     <Grid item sm={6}> */}
-                <ActionItems />
+                <ActionItems token={this.props.token} />
                 {/* </Grid>
                 </Grid>
                 <Grid container spacing={2}>
                     <Grid item sm={6}> */}
-                <Notes />
+                <Notes token={this.props.token} />
                 {/* </Grid>
                 </Grid> */}
             </div>

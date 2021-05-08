@@ -7,7 +7,7 @@ import Signup from './Signup'
 import Login from './Login'
 
 export interface AuthProps {
-    token: string
+    updateToken: any
 }
 
 export interface AuthState {
@@ -33,12 +33,12 @@ class Auth extends Component<AuthProps, AuthState> {
             <div className="auth-container">
                 <Grid>
                     {this.state.hasAccount ? (
-                        <Login updateToken={this.props.token} />
+                        <Login updateToken={this.props.updateToken} />
                     ) : (
-                        <Signup updateToken={this.props.token} />
+                        <Signup updateToken={this.props.updateToken} />
                     )}
                     <Button color="primary" onClick={(event) => this.toggle(event)}>
-                        {this.state.hasAccount ? 'Already have an account? Login.' : "Don't have an account yet? Sign up."}
+                        {this.state.hasAccount ? "Don't have an account yet? Sign up." : 'Already have an account? Login.'}
                     </Button>
                 </Grid>
             </div>

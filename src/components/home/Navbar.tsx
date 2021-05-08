@@ -2,55 +2,57 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Link from '@material-ui/core/Link';
-// import Typography from '@material-ui/core/Typography';
-
-const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-};
-
-const handleClose = () => {
-    setAnchorEl(null);
-};
+// import Link from '@material-ui/core/Link';
 
 export interface NavbarProps {
 
 }
 
 export interface NavbarState {
-
+    anchorEl: any
 }
 
 class Navbar extends Component<NavbarProps, NavbarState> {
     constructor(props: NavbarProps) {
         super(props);
-        this.state = { : };
+        this.state = { anchorEl: null };
     }
+
+    handleClick = (event: any) => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
+
     render() {
+        const { anchorEl } = this.state;
+
         return (
             <div>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                <Button
+                    aria-owns={anchorEl ? 'simple-menu' : undefined}
+                    aria-haspopup="true"
+                    onClick={this.handleClick}
+                >
                     Open Menu
-      </Button>
+        </Button>
                 <Menu
                     id="simple-menu"
                     anchorEl={anchorEl}
-                    keepMounted
                     open={Boolean(anchorEl)}
-                    onClose={handleClose}
+                    onClose={this.handleClose}
                 >
-                    <MenuItem>
-                        <Link to="/goals" className="site-link">Goals</Link>
-                    </MenuItem>
-                    <MenuItem>
-                        <Link to="/notes" className="site-link">Notes</Link>
-                    </MenuItem>
-                    <MenuItem>Logout</MenuItem>
+                    {/* <Link to='/goals'>
+                        <MenuItem>Goals</MenuItem>
+                    </Link> */}
+                    <MenuItem onClick={this.handleClose}>Goals</MenuItem>
 
-                </Menu>
-            </div>
+                    <MenuItem onClick={this.handleClose}>New Note</MenuItem>
+                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                </Menu >
+            </div >
         );
     }
 }
