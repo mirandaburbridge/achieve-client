@@ -8,7 +8,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
 export interface DeleteNoteProps {
-
+    handleOpen: any,
+    handleClose: any,
+    open: boolean,
+    token: any
 }
 
 export interface DeleteNoteState {
@@ -18,22 +21,20 @@ export interface DeleteNoteState {
 class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
     constructor(props: DeleteNoteProps) {
         super(props);
-        this.state = { : };
+        // this.state = { : };
     }
 
-    deleteNote() {
-        const response = await fetch(`http://localhost:3000/notes`, {
+    deleteNote(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        e.preventDefault();
+        fetch(`http://localhost:3000/notes/:noteID`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': this.state.token
+                'Authorization': this.props.token
             })
         })
-        const jsonified = await response.json()
-        this.setState({
-            items: jsonified.message
-        })
-        if (jsonified.error) return this.setState(jsonified.error);
+            .then((response) => response.json())
+        this.props.handleClose();
     }
 
     render() {
@@ -41,7 +42,7 @@ class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
             <div>
                 <Dialog
                     open={this.props.open}
-                    onClose={this.props.handleNoteClose}
+                    onClose={this.props.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
                     <DialogTitle id="form-dialog-title">Delete</DialogTitle>
@@ -58,7 +59,7 @@ class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
                         />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.props.handleNoteClose} color="primary">
+                        <Button onClick={this.props.handleClose} color="primary">
                             Cancel
         </Button>
                         <Button onClick={(e) => this.deleteNote(e)} color="primary">

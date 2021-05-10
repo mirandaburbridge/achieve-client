@@ -7,19 +7,21 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DeleteNote from './DeleteNote';
 
 export interface NotesProps {
     token: any
 }
 
 export interface NotesState {
-    notes: string[]
+    notes: string[],
+    open: boolean
 }
 
 class Notes extends Component<NotesProps, NotesState> {
     constructor(props: NotesProps) {
         super(props);
-        this.state = { notes: [] };
+        this.state = { notes: [], open: false };
     }
 
     componentDidMount() {
@@ -40,6 +42,14 @@ class Notes extends Component<NotesProps, NotesState> {
         })
     }
 
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     render() {
         return (
             <div>
@@ -52,7 +62,7 @@ class Notes extends Component<NotesProps, NotesState> {
                                     <Typography variant='body2' component='p'>{note}</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size='small' onClick={this.deleteNote}>Delete</Button>
+                                    <Button size='small' onClick={this.handleOpen}>Delete</Button>
                                 </CardActions>
                             </Card>
                         })}
@@ -61,11 +71,12 @@ class Notes extends Component<NotesProps, NotesState> {
                                 <Typography variant='body2' component='p'>Filler note</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size='small' onClick={this.deleteNote}>Delete</Button>
+                                <Button size='small' onClick={this.handleOpen}>Delete</Button>
                             </CardActions>
                         </Card>
                     </Box>
                 </Container>
+                <DeleteNote handleOpen={this.handleOpen} handleClose={this.handleClose} open={this.state.open} token={this.props.token} />
             </div>
         );
     }

@@ -3,25 +3,25 @@ import Container from "@material-ui/core/Container";
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 
-export interface NewGoalProps {
+export interface EditGoalProps {
     token: any
 }
 
-export interface NewGoalState {
+export interface EditGoalState {
     dueDate: string,
     description: string
 }
 
-class NewGoal extends Component<NewGoalProps, NewGoalState> {
-    constructor(props: NewGoalProps) {
+class EditGoal extends Component<EditGoalProps, EditGoalState> {
+    constructor(props: EditGoalProps) {
         super(props);
         this.state = { dueDate: '', description: '' };
     }
 
-    handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    editGoal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/goals/create`, {
-            method: 'POST',
+        fetch(`http://localhost:3000/goals/:goalID`, {
+            method: 'PUT',
             body: JSON.stringify({
                 goal: {
                     dueDate: this.state.dueDate,
@@ -43,15 +43,13 @@ class NewGoal extends Component<NewGoalProps, NewGoalState> {
 
     render() {
         return (
-            <div>
-                <Container>
-                    <TextField id="outlined-basic" label="Due Date" variant="outlined" />
-                    <TextField id="outlined-basic" label="Description" variant="outlined" />
-                    <Button onClick={(e) => this.handleSubmit(e)}>Submit</Button>
-                </Container>
-            </div>
+            <Container>
+                <TextField id="outlined-basic" label="Due Date" variant="outlined" />
+                <TextField id="outlined-basic" label="Description" variant="outlined" />
+                <Button onClick={(e) => this.editGoal(e)}>Submit</Button>
+            </Container>
         );
     }
 }
 
-export default NewGoal;
+export default EditGoal;
