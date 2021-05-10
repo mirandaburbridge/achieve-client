@@ -13,14 +13,13 @@ export interface NotesProps {
 }
 
 export interface NotesState {
-    url: string,
     notes: string[]
 }
 
 class Notes extends Component<NotesProps, NotesState> {
     constructor(props: NotesProps) {
         super(props);
-        this.state = { url: `http://localhost:3000/notes`, notes: [] };
+        this.state = { notes: [] };
     }
 
     componentDidMount() {
@@ -28,7 +27,13 @@ class Notes extends Component<NotesProps, NotesState> {
     }
 
     async fetchNotes() {
-        const response = await fetch(this.state.url)
+        const response = await fetch(`http://localhost:3000/notes`, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': this.props.token
+            })
+        })
         const jsonified = await response.json()
         this.setState({
             notes: jsonified.message
@@ -41,23 +46,22 @@ class Notes extends Component<NotesProps, NotesState> {
                 <Container>
                     <h4>Note</h4>
                     <Box border={1}>
-                        {/* {this.state.notes.map((note) => {
+                        {this.state.notes.map((note) => {
                             <Card variant='outlined'>
                                 <CardContent>
                                     <Typography variant='body2' component='p'>{note}</Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size='small'>Delete</Button>
+                                    <Button size='small' onClick={this.deleteNote}>Delete</Button>
                                 </CardActions>
                             </Card>
-                        })} */}
-
+                        })}
                         <Card variant='outlined'>
                             <CardContent>
                                 <Typography variant='body2' component='p'>Filler note</Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size='small'>Delete</Button>
+                                <Button size='small' onClick={this.deleteNote}>Delete</Button>
                             </CardActions>
                         </Card>
                     </Box>

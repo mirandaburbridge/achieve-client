@@ -32,7 +32,7 @@ class Login extends Component<LoginProps, LoginState> {
         this.state = { username: '', password: '', loading: false, error: '' };
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = (e: any) => {
         this.setState({ loading: true });
         e.preventDefault();
         fetch(`http://localhost:3000/user/login`, {

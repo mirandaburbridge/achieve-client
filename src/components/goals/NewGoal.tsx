@@ -7,14 +7,15 @@ export interface NewGoalProps {
 }
 
 export interface NewGoalState {
-    url: string,
+    goalsUrl: string,
+    itemsUrl: string,
     goals: string
 }
 
 class NewGoal extends Component<NewGoalProps, NewGoalState> {
     constructor(props: NewGoalProps) {
         super(props);
-        this.state = { url: `http://localhost:3000/goals/create`, goals: '' };
+        this.state = { goalsUrl: `http://localhost:3000/goals/create`, itemsUrl: `http://localhost:3000/action/:goalId`, goals: '' };
     }
     render() {
         return (

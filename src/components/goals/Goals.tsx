@@ -3,26 +3,27 @@ import { Link } from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 
 export interface GoalsProps {
-
+    token: any
 }
 
 export interface GoalsState {
-    url: string,
     goals: string[]
 }
 
 class Goals extends Component<GoalsProps, GoalsState> {
     constructor(props: GoalsProps) {
         super(props);
-        this.state = { url: `http://localhost:3000/goals`, goals: [] };
+        this.state = { goals: [] };
     }
 
     componentDidMount() {
         this.fetchGoals()
     }
 
+
+
     async fetchGoals() {
-        const response = await fetch(this.state.url)
+        const response = await fetch(`http://localhost:3000/goals`)
         const jsonified = await response.json()
         this.setState({
             goals: jsonified.message

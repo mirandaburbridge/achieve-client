@@ -7,44 +7,33 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-export interface NewNoteProps {
-    handleNoteOpen: any,
-    handleNoteClose: any,
-    open: boolean,
-    token: any
+export interface DeleteNoteProps {
+
 }
 
-export interface NewNoteState {
-    description: string
+export interface DeleteNoteState {
+
 }
 
-class NewNote extends Component<NewNoteProps, NewNoteState> {
-    constructor(props: NewNoteProps) {
+class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
+    constructor(props: DeleteNoteProps) {
         super(props);
-        this.state = { description: '' };
+        this.state = { : };
     }
 
-    handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-        fetch(`http://localhost:3000/notes/create`, {
-            method: 'POST',
-            body: JSON.stringify({
-                noteEntry: {
-                    description: this.state.description
-                }
-            }),
+    deleteNote() {
+        const response = await fetch(`http://localhost:3000/notes`, {
+            method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': this.props.token
+                'Authorization': this.state.token
             })
         })
-            .then((response) => response.json())
-            .then((data) => {
-                this.setState({ description: '' })
-                if (data.error) return this.setState(data.error);
-                this.props.handleNoteClose();
-            })
-
+        const jsonified = await response.json()
+        this.setState({
+            items: jsonified.message
+        })
+        if (jsonified.error) return this.setState(jsonified.error);
     }
 
     render() {
@@ -55,11 +44,11 @@ class NewNote extends Component<NewNoteProps, NewNoteState> {
                     onClose={this.props.handleNoteClose}
                     aria-labelledby="form-dialog-title"
                 >
-                    <DialogTitle id="form-dialog-title">New Note</DialogTitle>
+                    <DialogTitle id="form-dialog-title">Delete</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
-                            Make a new note
-            </DialogContentText>
+                            Are you sure you want to delete?
+        </DialogContentText>
                         <TextField
                             autoFocus
                             margin="dense"
@@ -71,10 +60,10 @@ class NewNote extends Component<NewNoteProps, NewNoteState> {
                     <DialogActions>
                         <Button onClick={this.props.handleNoteClose} color="primary">
                             Cancel
-            </Button>
-                        <Button onClick={(e) => this.handleSubmit(e)} color="primary">
+        </Button>
+                        <Button onClick={(e) => this.deleteNote(e)} color="primary">
                             Submit
-            </Button>
+        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -82,4 +71,4 @@ class NewNote extends Component<NewNoteProps, NewNoteState> {
     }
 }
 
-export default NewNote;
+export default DeleteNote;

@@ -7,6 +7,7 @@ import Auth from './components/login/Auth';
 import Goals from './components/goals/Goals';
 import Notes from './components/notes/Notes';
 import Home from './components/home/Home';
+import NewNote from './components/notes/NewNote';
 
 export interface AppProps {
 
@@ -45,10 +46,10 @@ class App extends Component<AppProps, AppState> {
           <Switch>
             <div>
               <Router>
-                <Navbar />
+                <Navbar clearToken={this.clearToken} token={this.state.token} />
                 <Switch>
                   <Route exact path="/goals" component={Goals} />
-                  <Route exact path="/notes" component={Notes} />
+                  <Route exact path="/notes/create" component={NewNote} />
                 </Switch>
                 <Home token={this.state.token} />
               </Router>

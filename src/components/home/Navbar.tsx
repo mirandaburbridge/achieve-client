@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-// import Link from '@material-ui/core/Link';
+import NewNote from '../notes/NewNote';
 
 export interface NavbarProps {
-
+    clearToken: any,
+    token: any
 }
 
 export interface NavbarState {
-    anchorEl: any
+    anchorEl: any,
+    open: boolean
 }
 
 class Navbar extends Component<NavbarProps, NavbarState> {
     constructor(props: NavbarProps) {
         super(props);
-        this.state = { anchorEl: null };
+        this.state = { anchorEl: null, open: false };
     }
 
     handleClick = (event: any) => {
@@ -25,6 +28,15 @@ class Navbar extends Component<NavbarProps, NavbarState> {
     handleClose = () => {
         this.setState({ anchorEl: null });
     };
+
+    handleNoteOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleNoteClose = () => {
+        this.setState({ open: false });
+    };
+
 
     render() {
         const { anchorEl } = this.state;
@@ -44,14 +56,12 @@ class Navbar extends Component<NavbarProps, NavbarState> {
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    {/* <Link to='/goals'>
-                        <MenuItem>Goals</MenuItem>
-                    </Link> */}
-                    <MenuItem onClick={this.handleClose}>Goals</MenuItem>
 
-                    <MenuItem onClick={this.handleClose}>New Note</MenuItem>
-                    <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                    <MenuItem><Link to="/goals">Goals</Link></MenuItem>
+                    <MenuItem onClick={this.handleNoteOpen}>New Note</MenuItem>
+                    <MenuItem onClick={this.props.clearToken}>Logout</MenuItem>
                 </Menu >
+                <NewNote handleNoteOpen={this.handleNoteOpen} handleNoteClose={this.handleNoteClose} open={this.state.open} token={this.props.token} />
             </div >
         );
     }
