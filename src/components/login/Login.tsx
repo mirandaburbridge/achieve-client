@@ -4,16 +4,8 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Typography } from "@material-ui/core";
+import Checkbox from '@material-ui/core/Checkbox';
 
-// const useStyles = makeStyles((theme) => ({
-//     root: {
-//         "& .MuiTextField-root": {
-//             margin: theme.spacing(1),
-//             width: "25ch",
-//         },
-//     },
-// }));
-// const classes = useStyles();
 
 export interface LoginProps {
     updateToken: any
@@ -23,14 +15,31 @@ export interface LoginState {
     username: string,
     password: string,
     loading: boolean,
-    error: string
+    error: string,
+    isAdmin: boolean
 }
 
 class Login extends Component<LoginProps, LoginState> {
     constructor(props: LoginProps) {
         super(props);
-        this.state = { username: '', password: '', loading: false, error: '' };
+        this.state = { username: '', password: '', loading: false, error: '', isAdmin: false };
     }
+
+    useStyles = makeStyles((theme) => ({
+        root: {
+            "& .MuiTextField-root": {
+                margin: theme.spacing(1),
+                width: "25ch",
+            },
+        },
+    }));
+
+    handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event) {
+            event.preventDefault()
+        }
+        this.setState({ isAdmin: true });
+    };
 
     handleSubmit = (e: any) => {
         this.setState({ loading: true });
@@ -77,6 +86,12 @@ class Login extends Component<LoginProps, LoginState> {
                             variant="outlined"
                             onChange={(e) => this.setState({ password: e.target.value })}
                             value={this.state.password}
+                        />
+                        <Checkbox
+                            color="default"
+                            checked={false}
+                            onChange={this.handleCheck}
+                            value='Admin'
                         />
                         <Button variant="contained" color="primary" type="submit">
                             {this.state.loading ? <CircularProgress size={25} color="inherit" /> : "Login"}

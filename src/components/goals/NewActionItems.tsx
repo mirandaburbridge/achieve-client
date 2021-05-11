@@ -2,29 +2,28 @@ import React, { Component } from 'react';
 import Container from "@material-ui/core/Container";
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-import NewActionItems from './NewActionItems'
 
-export interface NewGoalProps {
+export interface NewActionItemsProps {
     token: any
 }
 
-export interface NewGoalState {
+export interface NewActionItemsState {
     dueDate: string,
     description: string
 }
 
-class NewGoal extends Component<NewGoalProps, NewGoalState> {
-    constructor(props: NewGoalProps) {
+class NewActionItems extends Component<NewActionItemsProps, NewActionItemsState> {
+    constructor(props: NewActionItemsProps) {
         super(props);
         this.state = { dueDate: '', description: '' };
     }
 
     handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/goals/create`, {
+        fetch(`http://localhost:3000/action/:goalId`, {
             method: 'POST',
             body: JSON.stringify({
-                goal: {
+                item: {
                     dueDate: this.state.dueDate,
                     description: this.state.description
                 }
@@ -50,10 +49,9 @@ class NewGoal extends Component<NewGoalProps, NewGoalState> {
                     <TextField id="outlined-basic" label="Description" variant="outlined" />
                     <Button onClick={(e) => this.handleSubmit(e)}>Submit</Button>
                 </Container>
-                <NewActionItems token={this.props.token} />
             </div>
         );
     }
 }
 
-export default NewGoal;
+export default NewActionItems;

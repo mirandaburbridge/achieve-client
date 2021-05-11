@@ -5,7 +5,6 @@ import './App.css'
 import Navbar from "./components/home/Navbar";
 import Auth from './components/login/Auth';
 import Goals from './components/goals/Goals';
-import Notes from './components/notes/Notes';
 import Home from './components/home/Home';
 import NewNote from './components/notes/NewNote';
 

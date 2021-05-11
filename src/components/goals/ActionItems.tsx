@@ -5,21 +5,20 @@ import Box from "@material-ui/core/Box";
 import Checkbox from '@material-ui/core/Checkbox';
 
 export interface ActionItemsProps {
-
+    token: any
 }
 
 export interface ActionItemsState {
     items: string[],
-    checked: boolean,
-    token: any
+    checked: boolean
 }
 
 class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
     constructor(props: ActionItemsProps) {
         super(props);
-        this.state = { items: [], checked: false, token: localStorage.getItem('sessionToken') };
+        this.state = { items: [], checked: false };
 
-        console.log(this.state.token)
+        console.log(this.props.token)
     }
 
     componentDidMount() {
@@ -31,7 +30,7 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
-                'Authorization': this.state.token
+                'Authorization': this.props.token
             })
         })
         const jsonified = await response.json()
