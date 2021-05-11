@@ -9,13 +9,14 @@ export interface NewActionItemsProps {
 
 export interface NewActionItemsState {
     dueDate: string,
-    description: string
+    description: string,
+    token: any
 }
 
 class NewActionItems extends Component<NewActionItemsProps, NewActionItemsState> {
     constructor(props: NewActionItemsProps) {
         super(props);
-        this.state = { dueDate: '', description: '' };
+        this.state = { dueDate: '', description: '', token: this.props.token };
     }
 
     handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -45,6 +46,7 @@ class NewActionItems extends Component<NewActionItemsProps, NewActionItemsState>
         return (
             <div>
                 <Container>
+                    <h4>Action Item</h4>
                     <TextField id="outlined-basic" label="Due Date" variant="outlined" />
                     <TextField id="outlined-basic" label="Description" variant="outlined" />
                     <Button onClick={(e) => this.handleSubmit(e)}>Submit</Button>

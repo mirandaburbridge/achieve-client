@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import NewNote from '../notes/NewNote';
+import NewGoal from '../goals/NewGoal';
 
 export interface NavbarProps {
     clearToken: any,
@@ -12,13 +12,15 @@ export interface NavbarProps {
 
 export interface NavbarState {
     anchorEl: any,
-    open: boolean
+    openNote: boolean,
+    openGoal: boolean,
+    token: any
 }
 
 class Navbar extends Component<NavbarProps, NavbarState> {
     constructor(props: NavbarProps) {
         super(props);
-        this.state = { anchorEl: null, open: false };
+        this.state = { anchorEl: null, openNote: false, openGoal: false, token: this.props.token };
     }
 
     handleClick = (event: any) => {
@@ -30,11 +32,19 @@ class Navbar extends Component<NavbarProps, NavbarState> {
     };
 
     handleNoteOpen = () => {
-        this.setState({ open: true });
+        this.setState({ openNote: true });
     };
 
     handleNoteClose = () => {
-        this.setState({ open: false });
+        this.setState({ openNote: false });
+    };
+
+    handleGoalOpen = () => {
+        this.setState({ openGoal: true });
+    };
+
+    handleGoalClose = () => {
+        this.setState({ openGoal: false });
     };
 
 
@@ -48,7 +58,7 @@ class Navbar extends Component<NavbarProps, NavbarState> {
                     aria-haspopup="true"
                     onClick={this.handleClick}
                 >
-                    Open Menu
+                    Menu
         </Button>
                 <Menu
                     id="simple-menu"
@@ -57,11 +67,12 @@ class Navbar extends Component<NavbarProps, NavbarState> {
                     onClose={this.handleClose}
                 >
 
-                    <MenuItem><Link to="/goals">Goals</Link></MenuItem>
+                    <MenuItem onClick={this.handleGoalOpen}>New Goal</MenuItem>
                     <MenuItem onClick={this.handleNoteOpen}>New Note</MenuItem>
                     <MenuItem onClick={this.props.clearToken}>Logout</MenuItem>
                 </Menu >
-                <NewNote handleNoteOpen={this.handleNoteOpen} handleNoteClose={this.handleNoteClose} open={this.state.open} token={this.props.token} />
+                <NewGoal handleGoalOpen={this.handleGoalOpen} handleGoalClose={this.handleGoalClose} open={this.state.openGoal} token={this.props.token} />
+                <NewNote handleNoteOpen={this.handleNoteOpen} handleNoteClose={this.handleNoteClose} open={this.state.openNote} token={this.props.token} />
             </div >
         );
     }

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 // import Grid, { GridSpacing } from '@material-ui/core/Grid';
 
 import ActionItems from '../goals/ActionItems';
 import Notes from '../notes/Notes';
+import Goals from '../goals/Goals';
+import UserDisplay from '../admin/UserDisplay';
 
 // const useStyles = makeStyles((theme: Theme) =>
 //     createStyles({
@@ -27,28 +30,31 @@ export interface HomeProps {
 }
 
 export interface HomeState {
-
+    isAdmin: boolean
 }
 
 class Home extends Component<HomeProps, HomeState> {
     constructor(props: HomeProps) {
         super(props);
-        // this.state = { : };
+        this.state = { isAdmin: false };
+        console.log(this.props.token);
+
     }
     render() {
         return (
-            <div>
-                {/* <Grid container spacing={2}>
-                    <Grid item sm={6}> */}
-                <ActionItems token={this.props.token} />
-                {/* </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                    <Grid item sm={6}> */}
-                <Notes token={this.props.token} />
-                {/* </Grid>
-                </Grid> */}
-            </div>
+            this.state.isAdmin === false ? (
+                <Router>
+                    <Switch>
+                        <div>
+                            <ActionItems token={this.props.token} />
+                            <Goals token={this.props.token} />
+                            <Notes token={this.props.token} />
+                        </div>
+                    </Switch>
+                </Router>
+            ) : (
+                <UserDisplay token={this.props.token} />
+            )
         );
     }
 }

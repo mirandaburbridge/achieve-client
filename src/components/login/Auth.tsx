@@ -7,17 +7,19 @@ import Signup from './Signup'
 import Login from './Login'
 
 export interface AuthProps {
-    updateToken: any
+    updateToken: any,
+    token: any
 }
 
 export interface AuthState {
-    hasAccount: boolean
+    hasAccount: boolean,
+    token: any
 }
 
 class Auth extends Component<AuthProps, AuthState> {
     constructor(props: AuthProps) {
         super(props)
-        this.state = { hasAccount: false };
+        this.state = { hasAccount: false, token: this.props.updateToken };
     }
 
     toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,7 +35,7 @@ class Auth extends Component<AuthProps, AuthState> {
             <div className="auth-container">
                 <Grid>
                     {this.state.hasAccount ? (
-                        <Login updateToken={this.props.updateToken} />
+                        <Login updateToken={this.props.updateToken} token={this.props.token} />
                     ) : (
                         <Signup updateToken={this.props.updateToken} />
                     )}

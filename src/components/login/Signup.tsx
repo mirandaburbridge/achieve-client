@@ -4,7 +4,6 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, CircularProgress } from "@material-ui/core";
-import Checkbox from '@material-ui/core/Checkbox';
 
 
 
@@ -34,13 +33,6 @@ class Signup extends Component<SignupProps, SignupState> {
             },
         },
     }));
-
-    handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event) {
-            event.preventDefault()
-        }
-        this.setState({ isAdmin: true });
-    };
 
     handleSubmit = (e: any) => {
         this.setState({ loading: true });
@@ -87,12 +79,6 @@ class Signup extends Component<SignupProps, SignupState> {
                             variant="outlined"
                             onChange={(e) => this.setState({ password: e.target.value })}
                             value={this.state.password}
-                        />
-                        <Checkbox
-                            color="default"
-                            checked={false}
-                            onChange={this.handleCheck}
-                            value='Admin'
                         />
                         <Button variant="contained" color="primary" type="submit">
                             {this.state.loading ? <CircularProgress size={25} color="inherit" /> : "Login"}

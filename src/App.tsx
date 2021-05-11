@@ -20,6 +20,7 @@ class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = { token: '' };
+    console.log(this.state.token);
   }
 
   updateToken = (newToken: any) => {
@@ -30,6 +31,7 @@ class App extends Component<AppProps, AppState> {
   componentDidMount() {
     if (localStorage.getItem('sessionToken')) {
       this.setState({ token: localStorage.getItem('sessionToken') })
+      console.log(this.state.token)
     }
   }
 
@@ -40,7 +42,7 @@ class App extends Component<AppProps, AppState> {
 
   displayLogin = () => {
     return (
-      localStorage.getItem('sessionToken') ? (
+      this.state.token === localStorage.getItem('sessionToken') ? (
         <Router>
           <Switch>
             <div>
@@ -56,7 +58,7 @@ class App extends Component<AppProps, AppState> {
           </Switch>
         </Router>
       ) : (
-        <Auth updateToken={this.updateToken} />
+        <Auth updateToken={this.updateToken} token={this.state.token} />
       )
     )
   }

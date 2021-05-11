@@ -33,10 +33,10 @@ class NewNote extends Component<NewNoteProps, NewNoteState> {
                     description: this.state.description
                 }
             }),
-            headers: new Headers({
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': this.props.token
-            })
+            }
         })
             .then((response) => response.json())
             .then((data) => {
@@ -70,7 +70,7 @@ class NewNote extends Component<NewNoteProps, NewNoteState> {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.props.handleNoteClose} color="primary">
-                            Cancel
+                            Close
             </Button>
                         <Button onClick={(e) => this.handleSubmit(e)} color="primary">
                             Submit

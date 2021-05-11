@@ -4,11 +4,11 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { CircularProgress, Typography } from "@material-ui/core";
-import Checkbox from '@material-ui/core/Checkbox';
 
 
 export interface LoginProps {
-    updateToken: any
+    updateToken: any,
+    token: any
 }
 
 export interface LoginState {
@@ -34,13 +34,6 @@ class Login extends Component<LoginProps, LoginState> {
         },
     }));
 
-    handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event) {
-            event.preventDefault()
-        }
-        this.setState({ isAdmin: true });
-    };
-
     handleSubmit = (e: any) => {
         this.setState({ loading: true });
         e.preventDefault();
@@ -57,7 +50,8 @@ class Login extends Component<LoginProps, LoginState> {
             .then((data) => {
                 this.setState({ loading: false });
                 if (data.error) return this.setState(data.error);
-                this.props.updateToken(data.sessionToken, data.user.id);
+                this.props.updateToken(data.sessionToken);
+                console.log(data.sessionToken);
             })
             .catch((err) => this.setState({ loading: false }));
     };
@@ -86,12 +80,6 @@ class Login extends Component<LoginProps, LoginState> {
                             variant="outlined"
                             onChange={(e) => this.setState({ password: e.target.value })}
                             value={this.state.password}
-                        />
-                        <Checkbox
-                            color="default"
-                            checked={false}
-                            onChange={this.handleCheck}
-                            value='Admin'
                         />
                         <Button variant="contained" color="primary" type="submit">
                             {this.state.loading ? <CircularProgress size={25} color="inherit" /> : "Login"}

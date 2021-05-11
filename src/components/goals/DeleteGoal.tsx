@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -7,26 +6,26 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 
-export interface DeleteNoteProps {
-    handleOpen: any,
-    handleClose: any,
-    open: boolean,
+export interface DeleteGoalProps {
+    handleDeleteOpen: any,
+    handleDeleteClose: any,
+    openDelete: boolean,
     token: any
 }
 
-export interface DeleteNoteState {
+export interface DeleteGoalState {
 
 }
 
-class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
-    constructor(props: DeleteNoteProps) {
+class DeleteGoal extends Component<DeleteGoalProps, DeleteGoalState> {
+    constructor(props: DeleteGoalProps) {
         super(props);
-        // this.state = { : };
+        // this.state = { :  };
     }
 
-    deleteNote(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    deleteGoal(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
-        fetch(`http://localhost:3000/notes/:noteID`, {
+        fetch(`http://localhost:3000/goals/:noteID`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -34,15 +33,15 @@ class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
             }
         })
             .then((response) => response.json())
-        this.props.handleClose();
+        this.props.handleDeleteClose();
     }
 
     render() {
         return (
             <div>
                 <Dialog
-                    open={this.props.open}
-                    onClose={this.props.handleClose}
+                    open={this.props.openDelete}
+                    onClose={this.props.handleDeleteClose}
                     aria-labelledby="form-dialog-title"
                 >
                     <DialogTitle id="form-dialog-title">Delete</DialogTitle>
@@ -50,19 +49,12 @@ class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
                         <DialogContentText>
                             Are you sure you want to delete?
         </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="outlined-basic" label="Note" variant="outlined"
-                            fullWidth
-                            onChange={(e) => this.setState({ description: e.target.value })}
-                        />
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.props.handleClose} color="primary">
+                        <Button onClick={this.props.handleDeleteClose} color="primary">
                             Cancel
         </Button>
-                        <Button onClick={(e) => this.deleteNote(e)} color="primary">
+                        <Button onClick={(e) => this.deleteGoal(e)} color="primary">
                             Submit
         </Button>
                     </DialogActions>
@@ -72,4 +64,4 @@ class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
     }
 }
 
-export default DeleteNote;
+export default DeleteGoal;

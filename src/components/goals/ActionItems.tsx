@@ -1,43 +1,43 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import Checkbox from '@material-ui/core/Checkbox';
+import { ActionItemResponse } from './ActionItemInterface';
 
 export interface ActionItemsProps {
     token: any
 }
 
 export interface ActionItemsState {
-    items: string[],
-    checked: boolean
+    items: ActionItemResponse[],
+    checked: boolean,
+    token: any
 }
 
 class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
     constructor(props: ActionItemsProps) {
         super(props);
-        this.state = { items: [], checked: false };
-
-        console.log(this.props.token)
+        this.state = { items: [], checked: false, token: this.props.token };
     }
 
     componentDidMount() {
         this.fetchItems()
     }
 
-    async fetchItems() {
-        const response = await fetch(`http://localhost:3000/items`, {
+    fetchItems = () => {
+        fetch(`http://localhost:3000/items/:userId`, {
             method: 'GET',
-            headers: new Headers({
+            headers: {
                 'Content-Type': 'application/json',
                 'Authorization': this.props.token
+            }
+        })
+            .then((res: any) => res.json())
+            .then((json) => {
+                console.log(json)
+                this.setState({ items: json.items })
+                console.log(this.state.items)
             })
-        })
-        const jsonified = await response.json()
-        this.setState({
-            items: jsonified.message
-        })
-        if (jsonified.error) return this.setState(jsonified.error);
     }
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,19 +54,14 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
                     <h4>Action Items</h4>
                     <Box border={1}>
                         <ul>
-                            <li>
-                                <Checkbox
-                                    color="default"
-                                    checked={this.state.checked}
-                                    onChange={(event) => this.handleChange(event)}
-                                />
-                            Item 1</li>
                             {this.state.items.map((item) => {
-                                <li>
+                                console.log(item)
+                                return (<li>
                                     <Checkbox
                                         color="default"
                                         inputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-                                    />{item}</li>
+                                        key={item.id}
+                                    />{item.description}</li>)
                             })}
                         </ul>
                     </Box>
