@@ -34,7 +34,7 @@ class Goals extends Component<GoalsProps, GoalsState> {
 
 
     fetchGoals = () => {
-        fetch(`http://localhost:3000/goals/`, {
+        fetch(`https://achieveserver.herokuapp.com/goals/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

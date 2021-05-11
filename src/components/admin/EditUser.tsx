@@ -24,7 +24,7 @@ class EditUser extends Component<EditUserProps, EditUserState> {
 
     editUser = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/user/:userId`, {
+        fetch(`https://achieveserver.herokuapp.com/user/:userId`, {
             method: 'PUT',
             body: JSON.stringify({
                 user: {

@@ -21,7 +21,7 @@ class NewActionItems extends Component<NewActionItemsProps, NewActionItemsState>
 
     handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/action/:goalId`, {
+        fetch(`https://achieveserver.herokuapp.com/action/:goalId`, {
             method: 'POST',
             body: JSON.stringify({
                 item: {

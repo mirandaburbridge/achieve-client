@@ -31,7 +31,7 @@ class Notes extends Component<NotesProps, NotesState> {
     }
 
     fetchNotes = () => {
-        fetch(`http://localhost:3000/notes`, {
+        fetch(`https://achieveserver.herokuapp.com/notes`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

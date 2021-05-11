@@ -28,7 +28,7 @@ class UserDisplay extends Component<UserDisplayProps, UserDisplayState> {
     }
 
     async fetchUsers() {
-        const response = await fetch(`http://localhost:3000/user/display`, {
+        const response = await fetch(`https://achieveserver.herokuapp.com/user/display`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -26,7 +26,7 @@ class DeleteNote extends React.Component<DeleteNoteProps, DeleteNoteState> {
 
     deleteNote(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
-        fetch(`http://localhost:3000/notes/:noteID`, {
+        fetch(`https://achieveserver.herokuapp.com/notes/:noteID`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

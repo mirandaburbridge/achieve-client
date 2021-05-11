@@ -29,7 +29,7 @@ class EditGoal extends Component<EditGoalProps, EditGoalState> {
 
     editGoal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/goals/:goalId`, {
+        fetch(`https://achieveserver.herokuapp.com/goals/:goalId`, {
             method: 'PUT',
             body: JSON.stringify({
                 goal: {

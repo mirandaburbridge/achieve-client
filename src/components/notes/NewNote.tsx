@@ -26,7 +26,7 @@ class NewNote extends Component<NewNoteProps, NewNoteState> {
 
     handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/notes/create`, {
+        fetch(`https://achieveserver.herokuapp.com/notes/create`, {
             method: 'POST',
             body: JSON.stringify({
                 noteEntry: {

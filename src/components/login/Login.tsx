@@ -37,7 +37,7 @@ class Login extends Component<LoginProps, LoginState> {
     handleSubmit = (e: any) => {
         this.setState({ loading: true });
         e.preventDefault();
-        fetch(`http://localhost:3000/user/login`, {
+        fetch(`https://achieveserver.herokuapp.com/user/login`, {
             method: "POST",
             body: JSON.stringify({
                 user: { username: this.state.username, password: this.state.password },

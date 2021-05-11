@@ -25,7 +25,7 @@ class ActionItems extends Component<ActionItemsProps, ActionItemsState> {
     }
 
     fetchItems = () => {
-        fetch(`http://localhost:3000/items/:userId`, {
+        fetch(`https://achieveserver.herokuapp.com/items/:userId`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

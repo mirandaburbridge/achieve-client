@@ -25,7 +25,7 @@ class DeleteGoal extends Component<DeleteGoalProps, DeleteGoalState> {
 
     deleteGoal(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
-        fetch(`http://localhost:3000/goals/:noteID`, {
+        fetch(`https://achieveserver.herokuapp.com/goals/:noteID`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

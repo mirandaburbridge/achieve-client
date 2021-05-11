@@ -28,7 +28,7 @@ class NewGoal extends Component<NewGoalProps, NewGoalState> {
 
     handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        fetch(`http://localhost:3000/goals/create`, {
+        fetch(`https://achieveserver.herokuapp.com/goals/create`, {
             method: 'POST',
             body: JSON.stringify({
                 goal: {
